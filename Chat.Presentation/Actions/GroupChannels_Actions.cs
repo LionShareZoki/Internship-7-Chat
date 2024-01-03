@@ -237,3 +237,37 @@ namespace Chat.Presentation.Actions
                 ShowChatScreen(messageRepository, channel, context);
             }
         }
+
+
+
+        public static GroupChannel GetSelectedChannel(Func<ChatAppContext> contextFactory, int userId)
+        {
+            using (var context = contextFactory())
+            {
+                var groupChannelRepository = new GroupChannelRepository(context);
+                var channels = groupChannelRepository.GetUserChannels(userId);
+                if (channels.Any())
+                {
+                    for (int i = 0; i < channels.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {channels[i].ChannelName}");
+                    }
+
+                    Console.WriteLine("Select a channel:");
+                    if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= channels.Count)
+                    {
+                        return channels[choice - 1];
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No channels found.");
+                }
+
+                return null;
+            }
+            
+            
+        }
+    }
+}
