@@ -8,3 +8,6 @@ namespace Chat.Presentation.Actions
 {
     public class PrivateMessage_Actions : IPrivateMessageActions
     {
+       public readonly PrivateMessageRepository _privateMessageRepository;
+       public readonly Func<ChatAppContext> _contextFactory;
+
