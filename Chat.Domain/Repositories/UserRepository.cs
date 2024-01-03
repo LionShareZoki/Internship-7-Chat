@@ -67,3 +67,18 @@ namespace Chat.Domain.Repositories
             return context.Users.Any(u => u.Email.ToLower() == email.ToLower());
         }
 
+        public bool Add(User user)
+        {
+            if (!IsValidEmail(user.Email) || EmailExists(user.Email))
+            {
+                return false;
+            }
+
+            user.Password = Password.Hash(user.Password);
+            user.Email = user.Email.ToLower();
+
+            context.Users.Add(user);
+            context.SaveChanges();
+            return true;
+        }
+
