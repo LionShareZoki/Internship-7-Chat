@@ -11,3 +11,8 @@ namespace Chat.Presentation.Actions
        public readonly PrivateMessageRepository _privateMessageRepository;
        public readonly Func<ChatAppContext> _contextFactory;
 
+        public PrivateMessage_Actions(Func<ChatAppContext> contextFactory)
+        {
+            _contextFactory = contextFactory;
+            _privateMessageRepository = new PrivateMessageRepository(contextFactory());
+        }
