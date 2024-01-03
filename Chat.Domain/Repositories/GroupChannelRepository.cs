@@ -35,3 +35,25 @@ namespace Chat.Domain.Repositories
             _context.SaveChanges();
         }
 
+
+        public GroupChannel EnterChannel(int channelId, int userId)
+        {
+            var channel = _context.GroupChannels.FirstOrDefault(gc => gc.ChannelId == channelId);
+            if (channel == null) return null;
+
+            var isMember = _context.ChannelMembers.Any(cm => cm.ChannelId == channelId && cm.UserId == userId);
+            if (!isMember)
+            {
+                var member = new ChannelMember
+                {
+                    ChannelId = channelId,
+                    UserId = userId,
+                    JoinedAt = DateTime.UtcNow
+                };
+
+                _context.ChannelMembers.Add(member);
+                _context.SaveChanges();
+            }
+
+            return channel;
+        }
