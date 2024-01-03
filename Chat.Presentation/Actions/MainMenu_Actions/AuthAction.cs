@@ -14,3 +14,10 @@ namespace Chat.Presentation.Actions
         {
             return _currentlyAuthenticatedUser?.UserId;
         }
+
+        public AuthAction(UserRepository userRepository)
+        {
+            _userRepository = userRepository;
+            _lastFailedLoginTime = DateTime.MinValue;
+        }
+
