@@ -51,3 +51,15 @@ namespace Chat.Presentation.Actions
                 }
             }
         }
+
+        public void ListAllUsers()
+        {
+            var users = _userRepository.GetAllUsers();
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.UserId}, Email: {user.Email}, Is Admin: {user.isAdmin}, Created At: {user.CreatedAt}");
+            }
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
