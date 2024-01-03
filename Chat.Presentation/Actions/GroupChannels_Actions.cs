@@ -100,3 +100,40 @@ namespace Chat.Presentation.Actions
                 }
             }
         }
+
+
+
+        public void PrintAllUserChannels()
+        {
+            int? userId = AuthAction.GetCurrentUserId();
+
+            if (userId.HasValue)
+            {
+                using (var context = _contextFactory())
+                {
+                    var groupChannelRepository = new GroupChannelRepository(context);
+                    var channels = groupChannelRepository.GetUserChannels(userId.Value);
+
+                    if (channels.Count == 0)
+                    {
+                        Console.WriteLine("No channels found.");
+                        return;
+                    }
+
+                    Console.WriteLine("Channels:");
+                    int selectedIndex = SelectFromList(channels.Select(c => c.ChannelName).ToList(), "Select a channel or use arrows to navigate:");
+
+                    if (selectedIndex >= 0)
+                    {
+                        var selectedChannel = channels[selectedIndex];
+                        var messageRepository = new MessageRepository(_contextFactory);
+                        ShowChatScreen(messageRepository, selectedChannel, context);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unable to retrieve user ID.");
+            }
+        }
+        
