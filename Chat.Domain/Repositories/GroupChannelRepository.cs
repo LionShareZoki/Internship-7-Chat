@@ -71,3 +71,16 @@ namespace Chat.Domain.Repositories
         }
 
 
+        public List<GroupChannel> GetAvailableChannelsForUser(int userId)
+        {
+            var userChannelIds = _context.ChannelMembers
+                .Where(cm => cm.UserId == userId)
+                .Select(cm => cm.ChannelId)
+                .ToList();
+
+            var availableChannels = _context.GroupChannels
+                .Where(gc => !userChannelIds.Contains(gc.ChannelId))
+                .ToList();
+
+            return availableChannels;
+        }
