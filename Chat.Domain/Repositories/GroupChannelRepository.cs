@@ -14,3 +14,24 @@ namespace Chat.Domain.Repositories
             _context = context;
         }
 
+        public void CreateNewChannel(string channelName, int userId)
+        {
+            var newChannel = new GroupChannel
+            {
+                ChannelName = channelName
+            };
+
+            _context.GroupChannels.Add(newChannel);
+            _context.SaveChanges();
+
+            var member = new ChannelMember
+            {
+                ChannelId = newChannel.ChannelId,
+                UserId = userId,
+                JoinedAt = DateTime.UtcNow
+            };
+
+            _context.ChannelMembers.Add(member);
+            _context.SaveChanges();
+        }
+
