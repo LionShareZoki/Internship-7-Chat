@@ -48,3 +48,20 @@ namespace Chat.Presentation.Actions
                 }
             }
         }
+
+        public void CreateNewChannel()
+        {
+            Console.Write("Enter Channel Name: ");
+            string channelName = Console.ReadLine();
+            int? userId = AuthAction.GetCurrentUserId();
+
+            int actualUserId = userId ?? 0;
+
+            using (var context = _contextFactory())
+            {
+                var groupChannelRepository = new GroupChannelRepository(context);
+                groupChannelRepository.CreateNewChannel(channelName, actualUserId);
+                Console.WriteLine("Channel created successfully.");
+                Console.ReadKey();
+            }
+        }
