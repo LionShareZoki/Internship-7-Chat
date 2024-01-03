@@ -136,12 +136,12 @@ namespace Chat.Presentation.Actions
                 Console.WriteLine($"{sender} ({message.SentAt}): {message.Content}");
             }
         }
-
+        
        public string GetUserEmailById(int userId)
         {
             return _privateMessageRepository.GetUserEmailById(userId);
         }
-
+        
         public void ShowPrivateChatScreen(int userId, int recipientId)
         {
             var privateMessageRepository = new PrivateMessageRepository(_contextFactory());
