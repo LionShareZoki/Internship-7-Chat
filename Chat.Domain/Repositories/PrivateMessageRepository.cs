@@ -8,3 +8,9 @@ namespace Chat.Domain.Repositories
 {
     public class PrivateMessageRepository : IPrivateMessageRepository
     {
+        private readonly ChatAppContext _context;
+
+        public PrivateMessageRepository(ChatAppContext context)
+        {
+            _context = context;
+        }
