@@ -63,3 +63,31 @@ namespace Chat.Presentation.Actions
                 }
             }
         }
+
+        public void ChangeEmail(int userId)
+        {
+            Console.Write("Enter new email: ");
+            string newEmail = Console.ReadLine();
+
+            if (_userRepository.IsValidEmail(newEmail))
+            {
+                if (!_userRepository.EmailExists(newEmail))
+                {
+                    _userRepository.UpdateUserEmail(userId, newEmail);
+                    Console.WriteLine("Email updated successfully.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Email already exists. Please try a different one.");
+                    Console.ReadKey();
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid email format. Please try again.");
+                Console.ReadKey();
+
+            }
+        }
