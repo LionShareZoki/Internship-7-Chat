@@ -10,3 +10,7 @@ namespace Chat.Presentation.Actions
         private readonly UserRepository _userRepository;
         private DateTime _lastFailedLoginTime;
         
+        public static int? GetCurrentUserId()
+        {
+            return _currentlyAuthenticatedUser?.UserId;
+        }
