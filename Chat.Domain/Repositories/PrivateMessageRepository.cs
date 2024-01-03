@@ -29,3 +29,13 @@ namespace Chat.Domain.Repositories
             _context.Messages.Add(newMessage);
             _context.SaveChanges();
         }
+
+
+        public List<Message> GetConversation(int userId, int recipientId)
+        {
+            return _context.Messages
+                .Where(m => (m.SenderId == userId && m.RecipientId == recipientId) || 
+                            (m.SenderId == recipientId && m.RecipientId == userId))
+                .OrderBy(m => m.SentAt)
+                .ToList();
+        }
