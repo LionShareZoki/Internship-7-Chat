@@ -112,3 +112,14 @@ namespace Chat.Domain.Repositories
             }
         }
         
+        public List<User> GetNonAdminUsers()
+        {
+            return context.Users.Where(u => !u.isAdmin).ToList();
+        }
+
+
+
+    }
+}
+
+
