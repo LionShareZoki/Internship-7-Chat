@@ -39,3 +39,8 @@ namespace Chat.Domain.Repositories
                 .OrderBy(m => m.SentAt)
                 .ToList();
         }
+
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
