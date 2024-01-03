@@ -22,3 +22,7 @@ namespace Chat.Domain.Repositories
             return context.Users.Find(id);
         }
 
+        public User GetByEmail(string email)
+        {
+            return context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+        }
