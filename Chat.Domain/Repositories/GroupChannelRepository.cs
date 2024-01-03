@@ -84,3 +84,10 @@ namespace Chat.Domain.Repositories
 
             return availableChannels;
         }
+
+        public string GetUserEmailById(int userId)
+        {
+            return _context.Users.Where(u => u.UserId == userId).Select(u => u.Email).FirstOrDefault();
+        }
+
+        
