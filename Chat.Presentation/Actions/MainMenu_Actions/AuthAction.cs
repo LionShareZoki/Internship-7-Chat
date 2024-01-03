@@ -6,3 +6,7 @@ namespace Chat.Presentation.Actions
 {
     public class AuthAction : IAuthAction
     {
+        private static User? _currentlyAuthenticatedUser = null;
+        private readonly UserRepository _userRepository;
+        private DateTime _lastFailedLoginTime;
+        
