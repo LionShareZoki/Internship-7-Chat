@@ -62,3 +62,8 @@ namespace Chat.Domain.Repositories
             }
         }
 
+        public bool EmailExists(string email)
+        {
+            return context.Users.Any(u => u.Email.ToLower() == email.ToLower());
+        }
+
