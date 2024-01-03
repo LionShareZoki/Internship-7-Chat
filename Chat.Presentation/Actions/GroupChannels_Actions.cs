@@ -177,3 +177,34 @@ namespace Chat.Presentation.Actions
 
             return selectedIndex;
         }
+
+        
+        public void ShowChatScreen(MessageRepository messageRepository, GroupChannel channel, ChatAppContext context)
+        {
+            var groupChannelRepository = new GroupChannelRepository(context);
+            Console.Clear();
+            Console.WriteLine($"Chat screen for channel: {channel.ChannelName}\n");
+
+            var messages = groupChannelRepository.GetChannelMessages(channel.ChannelId);
+            foreach (var message in messages)
+            {
+                var senderEmail = groupChannelRepository.GetUserEmailById(message.SenderId); // Retrieve sender email
+                Console.WriteLine($"{message.SentAt} - {senderEmail}: {message.Content}"); // Display email instead of SenderId
+            }
+
+            Console.WriteLine("\nType your message below. Type /exit to return to the main menu.");
+
+            while (true)
+            {
+                Console.Write("> ");
+                string input = Console.ReadLine();
+
+                if (input == "/exit")
+                {
+                    Console.WriteLine("Exiting chat screen...");
+                    return;
+                }
+
+                SendMessageToChannel(messageRepository, channel, input);
+            }
+        }
