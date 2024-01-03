@@ -44,3 +44,18 @@ namespace Chat.Domain.Repositories
         {
             return _context.Users.ToList();
         }
+
+        public List<User> GetUsersWithConversations(int userId)
+        {
+            var userIds = _context.Messages
+                .Where(m => m.SenderId == userId || m.RecipientId == userId)
+                .Select(m => m.SenderId == userId ? m.RecipientId : m.SenderId)
+                .Distinct()
+                .ToList();
+
+            var users = _context.Users
+                .Where(u => userIds.Contains(u.UserId))
+                .ToList();
+
+            return users;
+        }
