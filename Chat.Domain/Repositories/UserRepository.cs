@@ -10,6 +10,9 @@ namespace Chat.Domain.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ChatAppContext context; 
 
-    }
-}
+        public UserRepository(ChatAppContext context)
+        {
+            this.context = context;
+        }
