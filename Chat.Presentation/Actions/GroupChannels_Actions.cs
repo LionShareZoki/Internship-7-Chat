@@ -65,3 +65,38 @@ namespace Chat.Presentation.Actions
                 Console.ReadKey();
             }
         }
+
+        public void EnterChannel()
+        {
+            int? userId = AuthAction.GetCurrentUserId();
+            int actualUserId = userId ?? 0;
+
+            using (var context = _contextFactory())
+            {
+                var groupChannelRepository = new GroupChannelRepository(context);
+
+                var availableChannels = groupChannelRepository.GetAvailableChannelsForUser(actualUserId);
+                if (availableChannels.Count == 0)
+                {
+                    Console.WriteLine("No new channels available to enter.");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Console.WriteLine("Select a channel to enter:");
+                int selectedIndex = SelectFromList(availableChannels.Select(c => c.ChannelName).ToList(), "Channels:");
+
+                if (selectedIndex >= 0)
+                {
+                    var selectedChannel = availableChannels[selectedIndex];
+            
+                    groupChannelRepository.EnterChannel(selectedChannel.ChannelId, actualUserId);
+                    Console.WriteLine($"You have entered the channel: {selectedChannel.ChannelName}");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection.");
+                }
+            }
+        }
