@@ -141,3 +141,49 @@ namespace Chat.Presentation.Actions
         {
             return _privateMessageRepository.GetUserEmailById(userId);
         }
+
+        public void ShowPrivateChatScreen(int userId, int recipientId)
+        {
+            var privateMessageRepository = new PrivateMessageRepository(_contextFactory());
+
+            Console.Clear();
+            Console.WriteLine($"Private chat with {privateMessageRepository.GetUserEmailById(recipientId)}:\n");
+
+            var messages = privateMessageRepository.GetConversation(userId, recipientId);
+            foreach (var message in messages)
+            {
+                var senderEmail = message.SenderId == userId ? "You" : privateMessageRepository.GetUserEmailById(message.SenderId);
+                Console.WriteLine($"{message.SentAt} - {senderEmail}: {message.Content}");
+            }
+
+            Console.WriteLine("\nType your message below. Type /exit to return to the main menu.");
+
+            while (true)
+            {
+                Console.Write("> ");
+                string input = Console.ReadLine();
+
+                if (input == "/exit")
+                {
+                    Console.WriteLine("Exiting chat screen...");
+                    break;
+                }
+
+                privateMessageRepository.SendPrivateMessage(userId, recipientId, input);
+
+                Console.Clear();
+                Console.WriteLine($"Private chat with {privateMessageRepository.GetUserEmailById(recipientId)}:\n");
+                messages = privateMessageRepository.GetConversation(userId, recipientId);
+                foreach (var message in messages)
+                {
+                    var senderEmail = message.SenderId == userId ? "You" : privateMessageRepository.GetUserEmailById(message.SenderId);
+                    Console.WriteLine($"{message.SentAt} - {senderEmail}: {message.Content}");
+                }
+            }
+        }
+        
+        
+
+
+    }
+}
