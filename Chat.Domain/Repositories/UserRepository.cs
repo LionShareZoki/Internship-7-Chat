@@ -16,3 +16,9 @@ namespace Chat.Domain.Repositories
         {
             this.context = context;
         }
+
+        public User GetById(int id)
+        {
+            return context.Users.Find(id);
+        }
+
