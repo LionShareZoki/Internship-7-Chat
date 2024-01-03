@@ -91,3 +91,15 @@ namespace Chat.Presentation.Actions
 
             }
         }
+
+        public void ChangePassword(int userId)
+        {
+            Console.Write("Enter new password: ");
+            string newPassword = Console.ReadLine();
+            
+
+            _userRepository.UpdateUserPassword(userId, newPassword);
+            Console.WriteLine("Password updated successfully.");
+        }
+    }
+}
