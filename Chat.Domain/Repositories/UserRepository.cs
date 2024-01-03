@@ -99,3 +99,16 @@ namespace Chat.Domain.Repositories
         }
         
         public void UpdateUserPassword(int userId, string newPassword)
+        {
+            var user = GetById(userId);
+            if (user != null)
+            {
+                user.Password = Password.Hash(newPassword);
+                context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("User not found.");
+            }
+        }
+        
