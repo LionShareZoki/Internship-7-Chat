@@ -47,3 +47,29 @@ namespace Chat.Presentation.Actions
                 Console.WriteLine("Invalid choice. Please try again.");
             }
         }
+
+
+
+       public void ViewConversation()
+        {
+            int userId = AuthAction.GetCurrentUserId() ?? 0;
+            var users = _privateMessageRepository.GetUsersWithConversations(userId);
+
+            Console.WriteLine("Select a user to view the conversation:");
+            for (int i = 0; i < users.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {users[i].Email}");
+            }
+
+            Console.Write("Enter your choice: ");
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= users.Count)
+            {
+                int recipientId = users[choice - 1].UserId;
+
+                ShowPrivateChatScreen(userId, recipientId);
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+            }
+        }
