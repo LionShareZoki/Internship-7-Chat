@@ -79,3 +79,23 @@ namespace Chat.Presentation.Actions
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
+
+
+        public void UpdateUserEmail()
+        {
+            Console.WriteLine("Enter the ID of the user to update their email:");
+            if (!int.TryParse(Console.ReadLine(), out int userId))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid user ID.");
+                return;
+            }
+
+            Console.WriteLine("Enter the new email address:");
+            string newEmail = Console.ReadLine();
+
+            _userRepository.UpdateUserEmail(userId, newEmail);
+            Console.WriteLine("Email updated successfully.");
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
