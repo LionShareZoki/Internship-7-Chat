@@ -91,3 +91,15 @@ namespace Chat.Domain.Repositories
         }
 
         
+        public List<Message> GetChannelMessages(int channelId)
+        {
+            return _context.Messages
+                .Where(m => m.ChannelId == channelId)
+                .OrderBy(m => m.SentAt)
+                .ToList();
+        }
+        
+ 
+
+    }
+}
