@@ -1,4 +1,4 @@
-using Chat.Data.Context;
+﻿using Chat.Data.Context;
 using Chat.Domain.Repositories;
 using Chat.Presentation.Actions;
 using System;
@@ -99,3 +99,44 @@ public class Program
             }
         }
     }
+
+    public static int ShowMenu(string prompt, List<string> items)
+    {
+        int selectedIndex = 0;
+
+        ConsoleKey keyPressed;
+        do
+        {
+            Console.Clear();
+            Console.WriteLine(prompt);
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+
+                Console.WriteLine($"{i + 1}. {items[i]}");
+                Console.ResetColor();
+            }
+
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            keyPressed = keyInfo.Key;
+
+            // Move the selection up or down based on the arrow keys
+            if (keyPressed == ConsoleKey.UpArrow)
+            {
+                selectedIndex = (selectedIndex == 0) ? items.Count - 1 : selectedIndex - 1;
+            }
+            else if (keyPressed == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex == items.Count - 1) ? 0 : selectedIndex + 1;
+            }
+
+        } while (keyPressed != ConsoleKey.Enter);
+
+        return selectedIndex + 1; // Return the selected index (1-based)
+    }
+}
