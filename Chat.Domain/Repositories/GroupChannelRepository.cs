@@ -57,3 +57,17 @@ namespace Chat.Domain.Repositories
 
             return channel;
         }
+
+
+        public List<GroupChannel> GetUserChannels(int userId)
+        {
+            return _context.ChannelMembers
+                .Where(cm => cm.UserId == userId)
+                .Join(_context.GroupChannels,
+                    cm => cm.ChannelId,
+                    gc => gc.ChannelId,
+                    (cm, gc) => gc)
+                .ToList();
+        }
+
+
