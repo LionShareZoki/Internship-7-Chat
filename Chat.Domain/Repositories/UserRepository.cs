@@ -52,3 +52,13 @@ namespace Chat.Domain.Repositories
             }
         }
 
+        public void PromoteUserToAdmin(int userId)
+        {
+            var user = GetById(userId);
+            if (user != null)
+            {
+                user.isAdmin = true;
+                context.SaveChanges();
+            }
+        }
+
