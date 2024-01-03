@@ -208,3 +208,32 @@ namespace Chat.Presentation.Actions
                 SendMessageToChannel(messageRepository, channel, input);
             }
         }
+
+
+
+
+        public void SendMessageToChannel(MessageRepository messageRepository, GroupChannel channel, string content)
+        {
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                Console.WriteLine("Message cannot be empty.");
+                return;
+            }
+
+            int senderId = AuthAction.GetCurrentUserId() ?? 0;
+            var newMessage = new Message
+            {
+                SenderId = senderId,
+                ChannelId = channel.ChannelId,
+                Content = content,
+                SentAt = DateTime.UtcNow
+            };
+
+            messageRepository.AddMessage(newMessage);
+            Console.WriteLine("Message sent!");
+
+            using (var context = _contextFactory())
+            {
+                ShowChatScreen(messageRepository, channel, context);
+            }
+        }
