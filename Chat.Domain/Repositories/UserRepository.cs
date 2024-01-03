@@ -26,3 +26,9 @@ namespace Chat.Domain.Repositories
         {
             return context.Users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
         }
+
+        public List<User> GetAllUsers()
+        {
+            return context.Users.ToList();
+        }
+
