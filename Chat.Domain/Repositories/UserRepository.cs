@@ -82,3 +82,14 @@ namespace Chat.Domain.Repositories
             return true;
         }
 
+        public bool Authenticate(string email, string password)
+        {
+            var user = GetByEmail(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            return Password.Verify(password, user.Password);
+        }
+
