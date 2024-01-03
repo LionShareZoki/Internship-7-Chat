@@ -137,3 +137,43 @@ namespace Chat.Presentation.Actions
             }
         }
         
+        
+        
+        public static int SelectFromList(List<string> items, string prompt)
+        {
+            int selectedIndex = 0;
+            ConsoleKey keyPressed;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine(prompt);
+
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (i == selectedIndex)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+
+                    Console.WriteLine($"{i + 1}. {items[i]}");
+                    Console.ResetColor();
+                }
+
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                keyPressed = keyInfo.Key;
+
+                if (keyPressed == ConsoleKey.UpArrow)
+                {
+                    selectedIndex = (selectedIndex == 0) ? items.Count - 1 : selectedIndex - 1;
+                }
+                else if (keyPressed == ConsoleKey.DownArrow)
+                {
+                    selectedIndex = (selectedIndex == items.Count - 1) ? 0 : selectedIndex + 1;
+                }
+
+            } while (keyPressed != ConsoleKey.Enter);
+
+            return selectedIndex;
+        }
