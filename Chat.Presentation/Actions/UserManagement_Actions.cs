@@ -8,3 +8,11 @@ namespace Chat.Presentation.Actions
 {
     public class UserManagement_Actions
     {
+        public readonly UserRepository _userRepository;
+        public readonly Func<ChatAppContext> _contextFactory;
+
+        public UserManagement_Actions(Func<ChatAppContext> contextFactory)
+        {
+            _contextFactory = contextFactory;
+            _userRepository = new UserRepository(contextFactory());
+        }
