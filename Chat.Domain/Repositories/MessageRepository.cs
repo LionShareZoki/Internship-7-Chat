@@ -5,3 +5,11 @@ namespace Chat.Domain.Repositories;
 
 public class MessageRepository : IMessageRepository
 {
+    private readonly Func<ChatAppContext> _contextFactory;
+
+    public MessageRepository(Func<ChatAppContext> contextFactory)
+    {
+        _contextFactory = contextFactory;
+    }
+
+
