@@ -59,7 +59,7 @@ namespace Chat.Domain.Repositories
 
             return users;
         }
-
+        
         public string GetUserEmailById(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
