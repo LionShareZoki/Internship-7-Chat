@@ -42,3 +42,13 @@ namespace Chat.Domain.Repositories
             }
         }
 
+        public void UpdateUserEmail(int userId, string newEmail)
+        {
+            var user = GetById(userId);
+            if (user != null && IsValidEmail(newEmail))
+            {
+                user.Email = newEmail.ToLower();
+                context.SaveChanges();
+            }
+        }
+
