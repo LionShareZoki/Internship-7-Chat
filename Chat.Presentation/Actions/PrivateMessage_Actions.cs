@@ -125,3 +125,14 @@ namespace Chat.Presentation.Actions
                 }
             }
         }
+
+        
+       public void DisplayConversation(int userId, int recipientId)
+        {
+            var messages = _privateMessageRepository.GetConversation(userId, recipientId);
+            foreach (var message in messages)
+            {
+                string sender = message.SenderId == userId ? "You" : GetUserEmailById(message.SenderId);
+                Console.WriteLine($"{sender} ({message.SentAt}): {message.Content}");
+            }
+        }
