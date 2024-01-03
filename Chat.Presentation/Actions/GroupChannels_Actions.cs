@@ -7,3 +7,12 @@ namespace Chat.Presentation.Actions
 {
     public class GroupChannel_Actions : IGroupChannelActions
     {
+        private readonly GroupChannelRepository _groupChannelRepository;
+        private readonly Func<ChatAppContext> _contextFactory;
+
+        public GroupChannel_Actions(Func<ChatAppContext> contextFactory)
+        {
+            _contextFactory = contextFactory;
+            _groupChannelRepository = new GroupChannelRepository(contextFactory());
+        }
+
