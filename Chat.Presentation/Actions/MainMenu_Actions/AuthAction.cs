@@ -58,3 +58,16 @@ namespace Chat.Presentation.Actions
             _currentlyAuthenticatedUser = _userRepository.GetByEmail(email);
             Console.WriteLine($"Authenticated as {email.ToLower()}.");
         }
+
+
+        public static User? GetCurrentlyAuthenticatedUser()
+        {
+            return _currentlyAuthenticatedUser;
+        }
+
+        public void Logout()
+        {
+            _currentlyAuthenticatedUser = null;
+        }
+    }
+}
