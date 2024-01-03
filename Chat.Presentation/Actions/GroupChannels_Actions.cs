@@ -16,3 +16,35 @@ namespace Chat.Presentation.Actions
             _groupChannelRepository = new GroupChannelRepository(contextFactory());
         }
 
+        public void ShowGroupChannelsMenu()
+        {
+            var groupChannelsMenu = new List<string>
+            {
+                "Create New Channel",
+                "Enter Channel",
+                "Print All Channels User Has Entered",
+                "Return to Main Menu"
+            };
+
+            while (true)
+            {
+                int choice = Program.ShowMenu("SubMenu:", groupChannelsMenu);
+
+                switch (choice)
+                {
+                    case 1:
+                        CreateNewChannel();
+                        break;
+                    case 2:
+                        EnterChannel();
+                        break;
+                    case 3:
+                        PrintAllUserChannels();
+                        break;
+                    case 4: 
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
