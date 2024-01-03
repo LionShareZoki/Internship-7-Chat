@@ -99,3 +99,32 @@ namespace Chat.Presentation.Actions
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
+
+
+        public void PromoteToAdmin()
+        {
+            var nonAdminUsers = _userRepository.GetNonAdminUsers();
+            if (nonAdminUsers.Count == 0)
+            {
+                Console.WriteLine("There are no non-admin users available.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Select a user to promote to admin:");
+            int selectedIndex = Program.ShowMenu("Non-Admin Users:", nonAdminUsers.Select(u => $"{u.UserId} - {u.Email}").ToList());
+
+            var selectedUser = nonAdminUsers[selectedIndex - 1];
+            _userRepository.PromoteUserToAdmin(selectedUser.UserId);
+            Console.WriteLine($"{selectedUser.Email} promoted to admin successfully.");
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+
+    }
+}
+
+
+
