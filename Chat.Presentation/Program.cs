@@ -36,3 +36,66 @@ public class Program
             }
         }
     }
+    
+    static void UserSubMenu(AuthAction authAction, UserRepository userRepository, ChatAppContextFactory contextFactory, string[] args)
+    {
+        var user = AuthAction.GetCurrentlyAuthenticatedUser();
+        bool isAdmin = user?.isAdmin ?? false;
+
+        var userMenu = new List<string>
+        {
+            "Group Channels",
+            "Private Messages",
+            "Profile Settings",
+            "Logout"
+        };
+
+        if (isAdmin)
+        {
+            userMenu.Insert(2, "User Management");
+        }
+
+        while (true)
+        {
+            int choice = ShowMenu("Menu:", userMenu);
+
+            switch (choice)
+            {
+                case 1:
+                    var groupChannelActions = new GroupChannel_Actions(() => contextFactory.CreateDbContext(args));
+                    groupChannelActions.ShowGroupChannelsMenu();
+                    break;
+                case 2:
+                    var privateMessageActions = new PrivateMessage_Actions(() => contextFactory.CreateDbContext(args));
+                    privateMessageActions.ShowPrivateMessagesMenu();
+                    break;
+                case 3:
+                    if (isAdmin)
+                    {
+                        var userManagementActions = new UserManagement_Actions(() => contextFactory.CreateDbContext(args));
+                        userManagementActions.ShowUserManagementMenu();
+                    }
+                    else
+                    {
+                        var profileSettingsActions = new ProfileSettings_Actions(userRepository);
+                        profileSettingsActions.ShowProfileSettingsMenu(user.UserId);
+                    }
+                    break;
+                case 4:
+                    if (isAdmin)
+                    {
+                        var profileSettingsActions = new ProfileSettings_Actions(userRepository);
+                        profileSettingsActions.ShowProfileSettingsMenu(user.UserId);
+                    }
+                    else
+                    {
+                        authAction.Logout();
+                        return;
+                    }
+                    break;
+                case 5:
+                    authAction.Logout();
+                    return;
+            }
+        }
+    }
