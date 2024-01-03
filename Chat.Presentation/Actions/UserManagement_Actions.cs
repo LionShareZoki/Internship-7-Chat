@@ -63,3 +63,19 @@ namespace Chat.Presentation.Actions
             Console.ReadKey();
         }
 
+
+        public void DeleteUser()
+        {
+            Console.WriteLine("Enter the ID of the user to delete:");
+            if (int.TryParse(Console.ReadLine(), out int userId))
+            {
+                _userRepository.DeleteUser(userId);
+                Console.WriteLine("User deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid user ID.");
+            }
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
