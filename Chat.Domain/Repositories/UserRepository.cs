@@ -32,3 +32,13 @@ namespace Chat.Domain.Repositories
             return context.Users.ToList();
         }
 
+        public void DeleteUser(int userId)
+        {
+            var user = GetById(userId);
+            if (user != null)
+            {
+                context.Users.Remove(user);
+                context.SaveChanges();
+            }
+        }
+
