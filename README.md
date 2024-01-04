@@ -29,7 +29,7 @@ Presentation: Contains actions.
 Username | Password
 --- | --- 
 admin@dump.hr | password
-1 | 2 
+pujic.z@gmail.com | 84368436
 
 
 
