@@ -27,7 +27,7 @@ Presentation: Contains actions.
 
 ## Users:
 Username | Password
---- | --- | ---
+--- | --- 
 admin@dump.hr | password
 1 | 2 
 
